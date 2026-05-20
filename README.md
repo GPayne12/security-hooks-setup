@@ -1,4 +1,10 @@
-# security-hooks-setup
+# 🔐 Security Hooks Setup
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![GitHub stars](https://img.shields.io/github/stars/GPayne12/security-hooks-setup.svg)](https://github.com/GPayne12/security-hooks-setup/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/GPayne12/security-hooks-setup.svg)](https://github.com/GPayne12/security-hooks-setup/network/members)
+[![Documentation](https://img.shields.io/badge/docs-GitHub%20Pages-blue)](https://github.com/GPayne12/security-hooks-setup/blob/main/docs/SETUP.md)
+
 Repo for security and safety in AI-assisted coding operations
 
 ## What it does
