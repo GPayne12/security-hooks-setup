@@ -11,8 +11,15 @@ ERRORS=0
 
 echo "Running pre-push security checks..."
 
+# Determine which files to scan: commits ahead of origin, or staged files if no origin/commits yet
+if git rev-parse origin/HEAD &>/dev/null; then
+  CHANGED_FILES=$(git diff --name-only origin/HEAD...HEAD 2>/dev/null || true)
+else
+  CHANGED_FILES=$(git diff --cached --name-only 2>/dev/null || true)
+fi
+
 # 1. Block node_modules/ and dist/ from being pushed
-FORBIDDEN_PATHS=$(git diff --name-only origin/HEAD...HEAD 2>/dev/null | grep -E '^(node_modules|dist)/' || true)
+FORBIDDEN_PATHS=$(echo "$CHANGED_FILES" | grep -E '^(node_modules|dist)/' || true)
 if [ -n "$FORBIDDEN_PATHS" ]; then
   echo -e "${RED}BLOCKED:${NC} Push contains forbidden paths:"
   echo "$FORBIDDEN_PATHS"
@@ -20,7 +27,7 @@ if [ -n "$FORBIDDEN_PATHS" ]; then
 fi
 
 # 2. Block .env files
-ENV_FILES=$(git diff --name-only origin/HEAD...HEAD 2>/dev/null | grep -E '(^|/)\.env' || true)
+ENV_FILES=$(echo "$CHANGED_FILES" | grep -E '(^|/)\.env' || true)
 if [ -n "$ENV_FILES" ]; then
   echo -e "${RED}BLOCKED:${NC} Push contains .env files:"
   echo "$ENV_FILES"
